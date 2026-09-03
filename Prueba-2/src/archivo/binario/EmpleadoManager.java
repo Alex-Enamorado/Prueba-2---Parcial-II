@@ -163,4 +163,74 @@ public class EmpleadoManager {
         return new RandomAccessFile(path, "rw");
     }
 
+    public void payEmployee(int code) throws IOException{
+        if(!isEmployeeActive(code) || isEmployeePayed(code)){
+            System.out.println("No se pudo pagar");
+            return;
+        }
+
+        String nombre = remps.readUTF();
+        double salarioBase = remps.readDouble();
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int mes = Calendar.getInstance().get(Calendar.MONTH);
+
+        RandomAccessFile rventas = salesFilefor(code);
+        rventas.seek(0);
+
+        for(int i = 0; i < mes; i++){
+            rventas.readDouble();
+            rventas.readBoolean();
+        }
+
+        double ventas = rventas.readDouble();
+        rventas.writeBoolean(true);
+
+        double sueldo = salarioBase + (ventas * 0.10);
+        double deduccion = sueldo * 0.035;
+        double total = sueldo - deduccion;
+
+        RandomAccessFile rbills = billsFilefor(code);
+        rbills.seek(rbills.length());
+        rbills.writeLong(Calendar.getInstance().getTimeInMillis());
+        rbills.writeDouble(sueldo);
+        rbills.writeDouble(deduccion);
+        rbills.writeInt(year);
+        rbills.writeInt(mes);
+
+        System.out.println("Empleado " + nombre + " se le pago Lps. " + total);
+    }
+
+
+    private boolean isEmployeePayed(int code) throws IOException{
+        int mes = Calendar.getInstance().get(Calendar.MONTH);
+        RandomAccessFile rventas = salesFilefor(code);
+        rventas.seek(0);
+
+        for(int i = 0; i < mes; i++){
+            rventas.readDouble();
+            rventas.readBoolean();
+        }
+
+        rventas.readDouble();
+        return rventas.readBoolean();
+    }
+
+
+
+
+    public void printEmployee(int code) throws IOException{
+        if(!isEmployeeActive(code)){
+            return;
+        }
+
+        String nombre = remps.readUTF();
+        double salario = remps.readDouble();
+        Date fechaC = new Date(remps.readLong());
+
+        System.out.println("Codigo: " + code);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Salario: " + salario);
+        
+    }
 }

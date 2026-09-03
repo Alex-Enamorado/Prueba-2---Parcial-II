@@ -51,7 +51,11 @@ public class EmpleadoMain {
                     break;
                 }
                 case 4: {
+                    System.out.println("Codigo: ");
+                    int codigo = sc.nextInt();
+                    sc.nextLine();
 
+                    manager.payEmployee(codigo);
                     break;
                 }
                 case 5: {
