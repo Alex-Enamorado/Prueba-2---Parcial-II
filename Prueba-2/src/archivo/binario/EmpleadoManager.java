@@ -104,4 +104,26 @@ public class EmpleadoManager {
         }
     }
 
+    private boolean isEmployeeActive(int code) throws IOException{
+        remps.seek(0);
+        while(remps.getFilePointer() < remps.length()){
+            int codigo = remps.readInt();
+            long puntero = remps.getFilePointer();
+            remps.readUTF();
+            remps.readDouble();
+            remps.readLong();
+            long despido = remps.readLong();
+
+
+            if(codigo == code && despido == 0){
+                remps.seek(puntero);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
 }
