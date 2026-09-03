@@ -123,7 +123,15 @@ public class EmpleadoManager {
         return false;
     }
 
-
-
+    public boolean fireEmployee(int code) throws IOException{
+        if(!isEmployeeActive(code)){
+            return false;
+        }
+        remps.readUTF();
+        remps.readDouble();
+        remps.readLong();
+        remps.writeLong(Calendar.getInstance().getTimeInMillis());
+        return true;
+    }
 
 }
