@@ -127,6 +127,7 @@ public class EmpleadoManager {
         if(!isEmployeeActive(code)){
             return false;
         }
+        
         remps.readUTF();
         remps.readDouble();
         remps.readLong();
@@ -151,6 +152,15 @@ public class EmpleadoManager {
         double ventas = rventas.readDouble();
         rventas.seek(puntero);
         rventas.writeDouble(ventas + monto);
+    }
+
+
+
+    
+    private RandomAccessFile billsFilefor(int code) throws IOException{
+        String dirPadre = employeeFolder(code);
+        String path = dirPadre + "/recibos.emp";
+        return new RandomAccessFile(path, "rw");
     }
 
 }

@@ -29,7 +29,7 @@ public class EmpleadoMain {
                     System.out.println("Salario: ");
                     double salario = sc.nextDouble();
                     sc.nextLine();
-                    
+
 
                     manager.addEmployee(nombre, salario);
                     break;
