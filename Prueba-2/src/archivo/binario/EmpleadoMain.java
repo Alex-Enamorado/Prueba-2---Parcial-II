@@ -25,8 +25,12 @@ public class EmpleadoMain {
                 case 1: {
                     System.out.println("Nombre: ");
                     String nombre = sc.nextLine();
+
                     System.out.println("Salario: ");
                     double salario = sc.nextDouble();
+                    sc.nextLine();
+                    
+
                     manager.addEmployee(nombre, salario);
                     break;
                 }
@@ -35,7 +39,15 @@ public class EmpleadoMain {
                     break;
                 }
                 case 3: {
+                    System.out.println("Codigo: ");
+                    int codigo = sc.nextInt();
+                    sc.nextLine();
 
+                    System.out.println("Monto: ");
+                    double monto = sc.nextDouble();
+                    sc.nextLine();
+
+                    manager.addSaleToEmployee(codigo, monto);
                     break;
                 }
                 case 4: {
@@ -45,6 +57,8 @@ public class EmpleadoMain {
                 case 5: {
                     System.out.println("Codigo: ");
                     int codigo = sc.nextInt();
+                    sc.nextLine();
+
                     manager.fireEmployee(codigo);
                     break;
                 }

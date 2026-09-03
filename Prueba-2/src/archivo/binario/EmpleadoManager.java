@@ -134,4 +134,23 @@ public class EmpleadoManager {
         return true;
     }
 
+    public void addSaleToEmployee(int code, double monto) throws IOException{
+        if(!isEmployeeActive(code)){
+            return;
+        }
+        int mes = Calendar.getInstance().get(Calendar.MONTH);
+        RandomAccessFile rventas = salesFilefor(code);
+        rventas.seek(0);
+        for(int i = 0; i < mes; i++){
+            rventas.readDouble();
+            rventas.readBoolean();
+        }
+
+
+        long puntero = rventas.getFilePointer();
+        double ventas = rventas.readDouble();
+        rventas.seek(puntero);
+        rventas.writeDouble(ventas + monto);
+    }
+
 }
